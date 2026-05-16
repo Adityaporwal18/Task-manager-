@@ -32,6 +32,7 @@ def create_app():
     from app.dashboard.routes import dashboard_bp
     from app.projects.routes import projects_bp
     from app.tasks.routes import tasks_bp
+    from app.api import api_bp
     from app.routes import main_bp
 
     app.register_blueprint(main_bp)
@@ -39,6 +40,7 @@ def create_app():
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(projects_bp)
     app.register_blueprint(tasks_bp)
+    app.register_blueprint(api_bp)
 
     with app.app_context():
         from app.models import User, Project, ProjectMember, Task, Comment

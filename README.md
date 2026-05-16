@@ -1,27 +1,32 @@
-# Team Task Manager - Flask Full Stack App
+# Team Task Manager - Full Stack Flask App
 
-A professional full-stack Team Task Manager web app using Flask, SQLite, SQLAlchemy, Flask-Login, and Bootstrap.
+A full-stack Team Task Manager web app where users can create projects, assign tasks, track progress, and work with role-based access for Admin and Member users.
+
+## Live Submission
+
+- Live URL: https://web-production-bf014f.up.railway.app
+- GitHub Repo: https://github.com/Adityaporwal18/Task-manager-
 
 ## Features
 
-- User signup/login/logout
+- User signup, login, and logout
+- Password hashing with Flask-Bcrypt
 - Admin and Member roles
-- Admin dashboard
-- Member dashboard
-- Project creation and management
-- Add team members to projects
-- Task creation and assignment
-- Task status tracking
-- Priority and due date support
-- Overdue task highlighting
-- Task comments
-- Search/filter tasks
+- Role-based access control
+- Admin dashboard with projects, users, tasks, and overdue task counts
+- Member dashboard with assigned projects, assigned tasks, and overdue work
+- Project creation, editing, deletion, and member management
+- Task creation, assignment, editing, deletion, and status updates
+- Task priority, due date, overdue detection, and comments
+- Search and status filtering for tasks
+- REST API endpoints for projects, tasks, status updates, and dashboard summaries
+- SQLite database with SQLAlchemy models and relationships
 - Responsive Bootstrap UI
-- SQLite database for local development
-- Ready for Railway deployment
+- Railway deployment with Gunicorn
 
 ## Tech Stack
 
+- Python
 - Flask
 - Flask-SQLAlchemy
 - Flask-Login
@@ -30,50 +35,43 @@ A professional full-stack Team Task Manager web app using Flask, SQLite, SQLAlch
 - SQLite
 - Bootstrap 5
 - Gunicorn
+- Railway
 
-## Local Setup
+## Database Models
 
-### 1. Create virtual environment
+- `User`: stores users, hashed passwords, and roles
+- `Project`: stores project details and deadlines
+- `ProjectMember`: links users to projects
+- `Task`: stores assignments, status, priority, and due dates
+- `Comment`: stores task comments
 
-```bash
-python -m venv venv
-```
+## REST API Endpoints
 
-### 2. Activate virtual environment
+Most API routes require login. Admin-only routes require an Admin user.
 
-Windows:
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/api/health` | Health check |
+| GET | `/api/dashboard` | Dashboard summary for current user |
+| GET | `/api/projects` | List visible projects |
+| POST | `/api/projects` | Create project, Admin only |
+| GET | `/api/projects/<id>` | Get one project |
+| GET | `/api/tasks` | List visible tasks |
+| POST | `/api/tasks` | Create task, Admin only |
+| GET | `/api/tasks/<id>` | Get one task |
+| PATCH | `/api/tasks/<id>/status` | Update task status |
 
-```bash
-venv\Scripts\activate
-```
-
-Mac/Linux:
-
-```bash
-source venv/bin/activate
-```
-
-### 3. Install packages
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Run the app
+Example task status update:
 
 ```bash
-python run.py
-```
-
-Open:
-
-```txt
-http://127.0.0.1:5000
+curl -X PATCH https://web-production-bf014f.up.railway.app/api/tasks/1/status \
+  -H "Content-Type: application/json" \
+  -d '{"status":"Completed"}'
 ```
 
 ## Demo Login
 
-When you first run the app, demo users are automatically created.
+Demo users are created automatically when the app starts for the first time.
 
 ### Admin
 
@@ -89,19 +87,75 @@ Email: member@example.com
 Password: member123
 ```
 
+## Local Setup
+
+### 1. Create Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+### 2. Activate Virtual Environment
+
+Mac/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+### 3. Install Packages
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run Locally
+
+```bash
+python run.py
+```
+
+Open:
+
+```txt
+http://127.0.0.1:5000
+```
+
 ## Railway Deployment
 
-1. Push code to GitHub
-2. Create new Railway project
-3. Connect GitHub repository
-4. Add environment variables:
+This app is deployed on Railway.
+
+Required environment variable:
 
 ```txt
 SECRET_KEY=your-production-secret-key
 ```
 
-5. Deploy
+Production start command:
 
-## Important Note
+```bash
+gunicorn run:app --bind 0.0.0.0:$PORT
+```
 
-This project uses SQLite for easiest setup. For large production usage, switch to PostgreSQL later by changing `DATABASE_URL`.
+## Assignment Checklist
+
+- Authentication: Done
+- Project and team management: Done
+- Task creation, assignment, and status tracking: Done
+- Dashboard with tasks, status, and overdue work: Done
+- REST APIs: Done
+- Database with relationships: Done
+- Validations: Done
+- Role-based access control: Done
+- Railway deployment: Done
+- GitHub repository and README: Done
+
+## Note
+
+SQLite is used for simple deployment and local development. For larger production usage, the app can be moved to PostgreSQL by setting `DATABASE_URL`.
