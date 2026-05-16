@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block page_heading %}Create Account{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="glass-card p-4 p-md-5">
+            <p class="eyebrow">New User</p>
+            <h3 class="fw-bold mb-2">Create your TaskFlow account</h3>
+            <p class="text-muted mb-4">Choose Admin if you want to create/manage projects. Choose Member if you only need assigned work access.</p>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="row">
+                    <div class="col-md-6 mb-3">{{ form.name.label(class="form-label fw-semibold") }} {{ form.name(class="form-control", placeholder="Your full name") }}</div>
+                    <div class="col-md-6 mb-3">{{ form.email.label(class="form-label fw-semibold") }} {{ form.email(class="form-control", placeholder="you@example.com") }}</div>
+                    <div class="col-md-6 mb-3">{{ form.password.label(class="form-label fw-semibold") }} {{ form.password(class="form-control", placeholder="Create password") }}</div>
+                    <div class="col-md-6 mb-3">{{ form.confirm_password.label(class="form-label fw-semibold") }} {{ form.confirm_password(class="form-control", placeholder="Confirm password") }}</div>
+                    <div class="col-md-12 mb-4">{{ form.role.label(class="form-label fw-semibold") }} {{ form.role(class="form-select") }}</div>
+                </div>
+                {{ form.submit(class="btn btn-primary w-100") }}
+            </form>
+            <p class="mt-4 mb-0 text-muted">Already have an account? <a class="fw-bold" href="{{ url_for('auth.login') }}">Login</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

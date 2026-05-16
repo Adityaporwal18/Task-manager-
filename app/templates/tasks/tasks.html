@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Tasks{% endblock %}
+{% block page_heading %}Tasks{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <p class="eyebrow">Task Board</p>
+        <h2 class="fw-bold mb-1">Task Management</h2>
+        <p class="text-muted mb-0">Search, filter, open, and update team tasks.</p>
+    </div>
+    {% if current_user.is_admin() %}<a href="{{ url_for('tasks.create_task') }}" class="btn btn-success"><i class="bi bi-plus-square me-2"></i>Create Task</a>{% endif %}
+</div>
+
+<div class="glass-card p-4 mb-4">
+    <form class="row g-3 align-items-end">
+        <div class="col-md-5">
+            <label class="form-label fw-semibold">Search Task</label>
+            <input type="text" name="search" value="{{ search }}" class="form-control" placeholder="Search by title or description">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">Status</label>
+            <select name="status" class="form-select">
+                <option value="">All Status</option>
+                {% for s in ['Pending', 'In Progress', 'Completed'] %}<option value="{{ s }}" {% if status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3"><button class="btn btn-primary w-100"><i class="bi bi-funnel me-2"></i>Apply Filter</button></div>
+    </form>
+</div>
+
+{% include "tasks/_task_table.html" %}
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Home - Team Task Manager{% endblock %}
+{% block page_heading %}Welcome to TaskFlow{% endblock %}
+{% block content %}
+<section class="hero text-white mb-4">
+    <div class="hero-copy">
+        <span class="hero-badge"><i class="bi bi-stars"></i> Live Team Workspace</span>
+        <h1 class="display-5 fw-bold mt-4 mb-3">Turn team tasks into a clear daily rhythm.</h1>
+        <p class="lead mb-4">Track what is moving, what is blocked, and who owns the next step without digging through scattered updates.</p>
+        <div class="d-flex flex-wrap gap-3">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg"><i class="bi bi-rocket-takeoff me-2"></i>Get Started</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-lg"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a>
+        </div>
+    </div>
+    <div class="hero-panel" aria-hidden="true">
+        <div class="hero-panel-top">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+        </div>
+        <div class="hero-metric">
+            <strong>82%</strong>
+            <span>weekly progress</span>
+        </div>
+        <div class="hero-task completed"><i class="bi bi-check2-circle"></i><span>Design review</span><strong>Done</strong></div>
+        <div class="hero-task active"><i class="bi bi-hourglass-split"></i><span>API handoff</span><strong>Today</strong></div>
+        <div class="hero-task"><i class="bi bi-chat-square-text"></i><span>Client notes</span><strong>2 new</strong></div>
+    </div>
+</section>
+
+<div class="workspace-strip mb-5">
+    <div><i class="bi bi-people-fill"></i><strong>Role clarity</strong><span>Admin and member views</span></div>
+    <div><i class="bi bi-alarm-fill"></i><strong>Due dates</strong><span>Overdue work stands out</span></div>
+    <div><i class="bi bi-bar-chart-fill"></i><strong>Progress</strong><span>Project momentum at a glance</span></div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card feature-card"><div class="card-body p-4">
+            <div class="feature-icon"><i class="bi bi-shield-lock"></i></div>
+            <h5 class="fw-bold">Role-Based Access</h5>
+            <p class="text-muted mb-0">Admins manage projects and tasks, while members focus on assigned work and updates.</p>
+        </div></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card feature-card"><div class="card-body p-4">
+            <div class="feature-icon"><i class="bi bi-kanban"></i></div>
+            <h5 class="fw-bold">Interactive Task Tracking</h5>
+            <p class="text-muted mb-0">Track Pending, In Progress, Completed, priority, due dates, and overdue items clearly.</p>
+        </div></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card feature-card"><div class="card-body p-4">
+            <div class="feature-icon"><i class="bi bi-graph-up-arrow"></i></div>
+            <h5 class="fw-bold">Smart Dashboards</h5>
+            <p class="text-muted mb-0">Visual dashboard cards help users understand total work, progress, and blockers quickly.</p>
+        </div></div>
+    </div>
+</div>
+
+<div class="glass-card p-4 showcase-card">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <p class="eyebrow">Built for local setup</p>
+            <h3 class="fw-bold mb-3">Ready to run, simple to understand.</h3>
+            <p class="text-muted mb-0">Includes SQLite for local development, Flask authentication, clean templates, static CSS/JS, and production files like Procfile and requirements.txt.</p>
+        </div>
+        <div class="col-lg-5">
+            <div class="row g-3">
+                <div class="col-6"><div class="stat-card"><div class="stat-icon"><i class="bi bi-database"></i></div><h3>SQL</h3><p>SQLite DB</p></div></div>
+                <div class="col-6"><div class="stat-card success"><div class="stat-icon"><i class="bi bi-check-circle"></i></div><h3>RBAC</h3><p>Roles</p></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

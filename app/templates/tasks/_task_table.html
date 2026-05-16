@@ -1,0 +1,44 @@
+<div class="table-card table-responsive">
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Project</th>
+            <th>Assigned</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Due</th>
+            <th class="text-end">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for task in tasks %}
+        <tr data-task-row class="{% if task.is_overdue() %}table-danger{% endif %}">
+            <td>
+                <div class="task-title">{{ task.title }}</div>
+                <small class="text-muted">{{ task.description[:55] }}{% if task.description|length > 55 %}...{% endif %}</small>
+            </td>
+            <td><span class="fw-semibold">{{ task.project.title }}</span></td>
+            <td><i class="bi bi-person-circle me-1 text-muted"></i>{{ task.assignee.name }}</td>
+            <td>
+                <span class="badge-soft {% if task.status == 'Completed' %}badge-completed{% elif task.status == 'In Progress' %}badge-progress{% else %}badge-pending{% endif %}">
+                    {{ task.status }}
+                </span>
+            </td>
+            <td>
+                <span class="badge-soft {% if task.priority == 'Critical' %}badge-critical{% elif task.priority == 'High' %}badge-high{% elif task.priority == 'Medium' %}badge-medium{% else %}badge-low{% endif %}">
+                    {{ task.priority }}
+                </span>
+            </td>
+            <td>
+                <div class="fw-semibold">{{ task.due_date }}</div>
+                {% if task.is_overdue() %}<small class="text-danger fw-bold"><i class="bi bi-exclamation-circle"></i> Overdue</small>{% endif %}
+            </td>
+            <td class="text-end"><a href="{{ url_for('tasks.detail_task', task_id=task.id) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-up-right-circle me-1"></i>Open</a></td>
+        </tr>
+    {% else %}
+        <tr><td colspan="7"><div class="empty-state"><i class="bi bi-inbox"></i>No tasks found.</div></td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>

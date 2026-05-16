@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Member Dashboard{% endblock %}
+{% block page_heading %}Member Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <p class="eyebrow">My Workspace</p>
+        <h2 class="fw-bold mb-1">Hello, {{ current_user.name }}</h2>
+        <p class="text-muted mb-0">View your assigned work, deadlines, and project progress.</p>
+    </div>
+    <a href="{{ url_for('tasks.list_tasks') }}" class="btn btn-primary"><i class="bi bi-list-task me-2"></i>View My Tasks</a>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4"><div class="stat-card"><div class="stat-icon"><i class="bi bi-folder2-open"></i></div><h3>{{ projects|length }}</h3><p>My Projects</p></div></div>
+    <div class="col-md-4"><div class="stat-card success"><div class="stat-icon"><i class="bi bi-check2-square"></i></div><h3>{{ tasks|length }}</h3><p>My Tasks</p></div></div>
+    <div class="col-md-4"><div class="stat-card danger"><div class="stat-icon"><i class="bi bi-clock-history"></i></div><h3>{{ overdue|length }}</h3><p>Overdue</p></div></div>
+</div>
+
+<div class="glass-card p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h4 class="fw-bold mb-1">My Assigned Tasks</h4>
+            <p class="text-muted mb-0">Update status and add comments from the task details page.</p>
+        </div>
+        <input id="quickTableSearch" class="form-control w-auto" placeholder="Quick search...">
+    </div>
+    {% include "tasks/_task_table.html" %}
+</div>
+{% endblock %}

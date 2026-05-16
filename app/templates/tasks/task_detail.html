@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Task Details{% endblock %}
+{% block page_heading %}Task Details{% endblock %}
+{% block content %}
+<div class="glass-card p-4 p-md-5 mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+        <div>
+            <p class="eyebrow">Task Information</p>
+            <h2 class="fw-bold mb-2">{{ task.title }}</h2>
+            <p class="text-muted mb-0">{{ task.description }}</p>
+        </div>
+        {% if current_user.is_admin() %}
+        <div class="d-flex gap-2">
+            <a href="{{ url_for('tasks.edit_task', task_id=task.id) }}" class="btn btn-warning"><i class="bi bi-pencil-square me-1"></i>Edit</a>
+            <form method="POST" action="{{ url_for('tasks.delete_task', task_id=task.id) }}" onsubmit="return confirm('Delete this task?')">
+                <button class="btn btn-danger"><i class="bi bi-trash me-1"></i>Delete</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3"><div class="stat-card"><div class="stat-icon"><i class="bi bi-folder"></i></div><p>Project</p><h5 class="fw-bold mt-2">{{ task.project.title }}</h5></div></div>
+        <div class="col-md-3"><div class="stat-card success"><div class="stat-icon"><i class="bi bi-person"></i></div><p>Assigned To</p><h5 class="fw-bold mt-2">{{ task.assignee.name }}</h5></div></div>
+        <div class="col-md-3"><div class="stat-card warning"><div class="stat-icon"><i class="bi bi-flag"></i></div><p>Priority</p><h5 class="fw-bold mt-2">{{ task.priority }}</h5></div></div>
+        <div class="col-md-3"><div class="stat-card danger"><div class="stat-icon"><i class="bi bi-calendar-event"></i></div><p>Due Date</p><h5 class="fw-bold mt-2">{{ task.due_date }}</h5>{% if task.is_overdue() %}<span class="badge-soft badge-critical">Overdue</span>{% endif %}</div></div>
+    </div>
+
+    <form method="POST" action="{{ url_for('tasks.update_status', task_id=task.id) }}" class="row g-3 align-items-end">
+        <div class="col-md-8">
+            <label class="form-label fw-semibold">Update Status</label>
+            <select name="status" class="form-select">
+                {% for s in ['Pending', 'In Progress', 'Completed'] %}<option value="{{ s }}" {% if task.status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4"><button class="btn btn-primary w-100"><i class="bi bi-save me-2"></i>Update Status</button></div>
+    </form>
+</div>
+
+<div class="glass-card p-4 p-md-5">
+    <h4 class="fw-bold mb-3"><i class="bi bi-chat-dots me-2"></i>Comments</h4>
+    {% for comment in task.comments %}
+        <div class="timeline-comment">
+            <div class="comment-avatar">{{ comment.user.name[0]|upper }}</div>
+            <div>
+                <div><strong>{{ comment.user.name }}</strong> <small class="text-muted">{{ comment.created_at.strftime('%d %b %Y, %I:%M %p') }}</small></div>
+                <p class="mb-0 text-muted">{{ comment.message }}</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="empty-state"><i class="bi bi-chat-left-text"></i>No comments yet.</div>
+    {% endfor %}
+    <form method="POST" class="mt-4">
+        {{ form.hidden_tag() }}
+        {{ form.message(class="form-control mb-3", rows="3", placeholder="Write a helpful update or blocker...") }}
+        {{ form.submit(class="btn btn-success") }}
+    </form>
+</div>
+{% endblock %}
